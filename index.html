@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TUI Todo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Title Bar -->
+    <div class="title-bar block">
+      <span class="title-text">&#9608; TUI Todo</span>
+      <span class="title-hint">Press <kbd>?</kbd> for help</span>
+    </div>
+
+    <!-- Tab Bar (category tabs) -->
+    <div class="tab-bar block" id="tab-bar"></div>
+
+    <!-- Main Content Area -->
+    <div class="main-area">
+      <!-- Left Pane: Category List -->
+      <div class="pane pane-categories block" id="pane-categories">
+        <div class="pane-title"> Categories </div>
+        <div class="pane-content" id="category-list"></div>
+        <div class="pane-footer">
+          <span><kbd>a</kbd> add</span>
+          <span><kbd>d</kbd> delete</span>
+          <span><kbd>r</kbd> rename</span>
+        </div>
+      </div>
+
+      <!-- Middle Pane: Task List -->
+      <div class="pane pane-tasks block" id="pane-tasks">
+        <div class="pane-title" id="tasks-title"> Tasks </div>
+        <div class="pane-content" id="task-list"></div>
+        <div class="pane-footer">
+          <span><kbd>a</kbd> add</span>
+          <span><kbd>d</kbd> delete</span>
+          <span><kbd>Space</kbd> toggle</span>
+        </div>
+      </div>
+
+      <!-- Right Pane: Task Detail / Preview -->
+      <div class="pane pane-detail block" id="pane-detail">
+        <div class="pane-title"> Details </div>
+        <div class="pane-content" id="detail-content">
+          <div class="detail-empty">Select a task to view details</div>
+        </div>
+        <div class="pane-footer">
+          <span><kbd>e</kbd> edit</span>
+          <span><kbd>p</kbd> priority</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar block" id="status-bar">
+      <span class="status-left" id="status-msg">Ready</span>
+      <span class="status-right">
+        <kbd>Tab</kbd> switch pane
+        <kbd>&#8593;&#8595;</kbd> navigate
+        <kbd>q</kbd> deselect
+      </span>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal block" id="modal">
+        <div class="pane-title" id="modal-title"> Input </div>
+        <div class="modal-body">
+          <label id="modal-label">Name:</label>
+          <div class="input-row">
+            <span class="input-prompt">&gt; </span>
+            <input type="text" id="modal-input" autocomplete="off" spellcheck="false">
+          </div>
+          <!-- Priority selector (hidden by default) -->
+          <div class="priority-selector" id="priority-selector" style="display:none;">
+            <label>Priority:</label>
+            <div class="priority-options" id="priority-options">
+              <button class="priority-btn" data-priority="low">Low</button>
+              <button class="priority-btn" data-priority="medium">Medium</button>
+              <button class="priority-btn" data-priority="high">High</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <span><kbd>Enter</kbd> confirm</span>
+          <span><kbd>Esc</kbd> cancel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="help-overlay">
+      <div class="modal modal-help block">
+        <div class="pane-title"> Keyboard Shortcuts </div>
+        <div class="modal-body help-body">
+          <div class="help-section">
+            <div class="help-heading">Navigation</div>
+            <div class="help-row"><kbd>Tab</kbd> / <kbd>Shift+Tab</kbd><span>Switch pane</span></div>
+            <div class="help-row"><kbd>&#8593;</kbd> / <kbd>k</kbd><span>Move up</span></div>
+            <div class="help-row"><kbd>&#8595;</kbd> / <kbd>j</kbd><span>Move down</span></div>
+            <div class="help-row"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd><span>Jump to pane</span></div>
+          </div>
+          <div class="help-section">
+            <div class="help-heading">Actions</div>
+            <div class="help-row"><kbd>a</kbd><span>Add item</span></div>
+            <div class="help-row"><kbd>d</kbd><span>Delete item</span></div>
+            <div class="help-row"><kbd>r</kbd><span>Rename (categories)</span></div>
+            <div class="help-row"><kbd>e</kbd><span>Edit task</span></div>
+            <div class="help-row"><kbd>Space</kbd><span>Toggle done</span></div>
+            <div class="help-row"><kbd>p</kbd><span>Cycle priority</span></div>
+            <div class="help-row"><kbd>q</kbd><span>Deselect / close</span></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <span><kbd>Esc</kbd> / <kbd>?</kbd> close</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal-overlay" id="confirm-overlay">
+      <div class="modal block">
+        <div class="pane-title"> Confirm </div>
+        <div class="modal-body">
+          <p id="confirm-msg">Are you sure?</p>
+        </div>
+        <div class="modal-footer">
+          <span><kbd>y</kbd> yes</span>
+          <span><kbd>n</kbd> / <kbd>Esc</kbd> no</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
