@@ -443,6 +443,27 @@ html, body {
   background: rgba(0, 0, 0, 0.4);
 }
 
+.kb-btn {
+  margin-right: 4px;
+  font-size: 11px;
+}
+
+.kb-btn.active {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hidden input used to trigger mobile keyboard */
+.kb-input {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* --- kbd tag --- */
 kbd {
   font-family: var(--font-mono);

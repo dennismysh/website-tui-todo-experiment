@@ -486,6 +486,39 @@
     showHelp();
   });
 
+  // ── Mobile Keyboard Button ────────────────────────────
+  var kbInput = document.getElementById("kb-input");
+  var kbBtn = document.getElementById("kb-btn");
+  var kbActive = false;
+
+  kbBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (kbActive) {
+      kbInput.blur();
+      kbActive = false;
+      kbBtn.classList.remove("active");
+      setStatus("Keyboard dismissed");
+    } else {
+      if (!isAnyModalOpen()) {
+        kbInput.focus();
+        kbActive = true;
+        kbBtn.classList.add("active");
+        setStatus("Keyboard active \u2500 type keys to navigate");
+      }
+    }
+  });
+
+  // Keep the hidden input empty so it doesn't accumulate text
+  kbInput.addEventListener("input", function () {
+    kbInput.value = "";
+  });
+
+  // Track when the keyboard is dismissed by the OS (e.g. tapping elsewhere)
+  kbInput.addEventListener("blur", function () {
+    kbActive = false;
+    kbBtn.classList.remove("active");
+  });
+
   // ── Keyboard Navigation ──────────────────────────────────
 
   document.addEventListener("keydown", function (e) {
