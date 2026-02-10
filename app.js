@@ -481,6 +481,11 @@
     render();
   }
 
+  // ── Help Button ─────────────────────────────────────────
+  document.getElementById("help-btn").addEventListener("click", function () {
+    showHelp();
+  });
+
   // ── Keyboard Navigation ──────────────────────────────────
 
   document.addEventListener("keydown", function (e) {
