@@ -508,9 +508,21 @@
     }
   });
 
-  // Keep the hidden input empty so it doesn't accumulate text
-  kbInput.addEventListener("input", function () {
+  // Keep the hidden input empty so it doesn't accumulate text.
+  // On mobile, virtual keyboards often don't fire proper keydown events
+  // (e.key is "Unidentified" or "Process"), so the document-level keydown
+  // handler can't match shortcuts. When no valid keydown fired recently,
+  // dispatch a synthetic keydown with the actual typed character.
+  kbInput.addEventListener("input", function (e) {
+    var typed = e.data || kbInput.value;
     kbInput.value = "";
+    if (typed && typed.length === 1 && (Date.now() - lastKeydownTime > 50)) {
+      document.dispatchEvent(new KeyboardEvent("keydown", {
+        key: typed,
+        bubbles: true,
+        cancelable: true
+      }));
+    }
   });
 
   // Track when the keyboard is dismissed by the OS (e.g. tapping elsewhere)
@@ -521,8 +533,19 @@
 
   // ── Keyboard Navigation ──────────────────────────────────
 
+  // Track when a valid keydown fires so the mobile input handler
+  // can tell whether the virtual keyboard produced a real event.
+  var lastKeydownTime = 0;
+
   document.addEventListener("keydown", function (e) {
     var key = e.key;
+
+    // Mobile virtual keyboards often send "Unidentified" or "Process"
+    // as e.key. Track valid keydowns so the input handler can decide
+    // whether to dispatch a synthetic event.
+    if (key !== "Unidentified" && key !== "Process") {
+      lastKeydownTime = Date.now();
+    }
 
     // --- Modal input handling ---
     if (document.getElementById("modal-overlay").classList.contains("visible")) {
