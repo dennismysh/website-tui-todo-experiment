@@ -421,6 +421,23 @@ html, body {
   align-items: center;
 }
 
+.help-btn {
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--fg-bright);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 6px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.help-btn:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
 /* --- kbd tag --- */
 kbd {
   font-family: var(--font-mono);
